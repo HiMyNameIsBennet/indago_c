@@ -13,6 +13,7 @@
 
 unsigned frameCount = 0;
 double prevTime = 0;
+char* title;
 
 void Timer(){
     double time = glfwGetTime();
@@ -20,7 +21,7 @@ void Timer(){
 
     if(time - prevTime >= 1)
     {
-        char *title = (char *) malloc(strlen(WINDOW_TITLE_PREFIX) + sizeof(char) * 11 * 3 + 8);
+        title = (char*) malloc(sizeof(char) * (strlen(WINDOW_TITLE_PREFIX) + 20));
 
         sprintf(title, "%s: %dFPS @ %dx%d",
                 WINDOW_TITLE_PREFIX,

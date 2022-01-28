@@ -13,6 +13,7 @@
 #include "../core/cleanup.h"
 
 #include "window.h"
+#include "../core/resize.h"
 
 int currentWidth = 1024;
 int currentHeight = 800;
@@ -42,6 +43,7 @@ void InitWindow(int argc, char** argv){
 
     glfwMakeContextCurrent(window);
     glfwSetWindowCloseCallback(window, WindowClosingCallback);
+    glfwSetWindowSizeCallback(window, Resize);
 
     glClearColor(.0f, .0f, .0f, .0f);
 }
