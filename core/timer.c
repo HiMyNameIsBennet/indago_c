@@ -17,7 +17,7 @@ char* title;
 
 void Timer(){
     double time = glfwGetTime();
-    frameCount ++;
+    frameCount++;
 
     if(time - prevTime >= 1)
     {
