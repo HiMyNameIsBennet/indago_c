@@ -10,16 +10,53 @@
 #include "buffers.h"
 #include "../core/vertex.h"
 
-GLuint vaoID, vboID;
+GLuint vaoID, vboID, iboID;
 
 void InitVBO(void){
     Vertex vtxArray[] = {
-    {{-0.8f, -0.8f,0.0f,1.0f }, {1.0f, 0.0f, 1.0f, 1.0f }},
-    {{ 0.0f,  0.8f,0.0f,1.0f }, {1.0f, 1.0f, 0.0f, 1.0f }},
-    {{ 0.8f, -0.8f,0.0f,1.0f }, {0.0f, 1.0f, 1.0f, 1.0f }},
-    {{ 0.3f,  0.7f,0.0f,1.0f }, {0.204f, 0.933f, 0.855f, 1.0f }},
-    {{ 0.5f,  0.3f,0.0f,1.0f }, {0.922f, 0.835f, 0.357f, 1.0f }},
-    {{ 0.7f,  0.7f,0.0f,1.0f }, {0.745f, 0.247f, 0.882f, 1.0f }}
+    {{ 0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f }},
+
+    {{-0.2f, 0.8f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+    {{ 0.2f, 0.8f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+    {{ 0.0f, 0.8f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+    {{ 0.0f, 1.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+
+    {{-0.2f, -0.8f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+    {{ 0.2f, -0.8f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+    {{ 0.0f, -0.8f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+    {{ 0.0f, -1.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+
+    {{-0.8f, -0.2f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+    {{-0.8f, 0.2f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+    {{-0.8f, 0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+    {{-1.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+
+    {{ 0.8f, -0.2f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+    {{ 0.8f, 0.2f, 0.0f, 1.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+    {{ 0.8f, 0.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
+    {{ 1.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f, 1.0f}}
+    };
+
+    GLubyte idxArray[] = {
+            0, 1, 3,
+            0, 3, 2,
+            3, 1, 4,
+            3, 4, 2,
+
+            0, 5, 7,
+            0, 7, 6,
+            7, 5, 8,
+            7, 8, 6,
+
+            0, 9, 11,
+            0, 11, 10,
+            11, 9, 12,
+            11, 12, 10,
+
+            0, 13, 15,
+            0, 15, 14,
+            15, 13, 16,
+            15, 16, 14
     };
 
     GLenum errorValue = glGetError();
@@ -33,6 +70,10 @@ void InitVBO(void){
     glGenBuffers(1, &vboID); //Vertex Buffer Object
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
     glBufferData(GL_ARRAY_BUFFER, bufSize, vtxArray, GL_STATIC_DRAW);
+
+    glGenBuffers(1, &iboID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxArray), idxArray, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, vtxSize, 0);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, vtxSize, (GLvoid*) rgbOffset);
@@ -58,6 +99,8 @@ void DestroyVBO(void) {
     glDisableVertexAttribArray(0);
 
     glDeleteBuffers(1, &vboID);
+    glDeleteBuffers(1, &iboID);
+
     glDeleteVertexArrays(1, &vaoID);
 
     errorValue = glGetError();

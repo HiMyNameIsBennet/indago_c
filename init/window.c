@@ -15,8 +15,8 @@
 #include "window.h"
 #include "../core/resize.h"
 
-int currentWidth = 1024;
-int currentHeight = 800;
+int currentWidth = 600;
+int currentHeight = 600;
 GLFWwindow* window = NULL;
 
 static void WindowClosingCallback(GLFWwindow* window);

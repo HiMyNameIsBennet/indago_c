@@ -11,7 +11,7 @@
 
 void Render(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES,0,6);
+    glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_BYTE, (GLvoid*) 0);
 
     glfwSwapBuffers(window);
 }
