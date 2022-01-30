@@ -11,9 +11,10 @@
 #include "../core/render.h"
 #include "../core/timer.h"
 #include "../core/cleanup.h"
+#include "../core/resize.h"
+#include "../core/input.h"
 
 #include "window.h"
-#include "../core/resize.h"
 
 int currentWidth = 600;
 int currentHeight = 600;
@@ -44,6 +45,7 @@ void InitWindow(int argc, char** argv){
     glfwMakeContextCurrent(window);
     glfwSetWindowCloseCallback(window, WindowClosingCallback);
     glfwSetWindowSizeCallback(window, Resize);
+    glfwSetKeyCallback(window, KeyboardInput);
 
     glClearColor(.0f, .0f, .0f, .0f);
 }

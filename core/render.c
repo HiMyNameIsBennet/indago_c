@@ -8,10 +8,16 @@
 #include "render.h"
 #include "timer.h"
 #include "../init/window.h"
+#include "../init/buffers.h"
 
 void Render(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_BYTE, (GLvoid*) 0);
+
+    if(activeIBO == 0) {
+        glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_BYTE, NULL);
+    } else {
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, NULL);
+    }
 
     glfwSwapBuffers(window);
 }

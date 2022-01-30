@@ -10,7 +10,7 @@
 #include "buffers.h"
 #include "../core/vertex.h"
 
-GLuint vaoID, vboID, iboID;
+GLuint vaoID, vboID, iboID[2], activeIBO = 0;
 
 void InitVBO(void){
     Vertex vtxArray[] = {
@@ -59,6 +59,22 @@ void InitVBO(void){
             15, 16, 14
     };
 
+    GLubyte idxArrayAlt[] = {
+            3, 4, 16,
+            3, 15, 16,
+            15, 16, 8,
+            15, 7, 8,
+            7, 8, 12,
+            7, 11, 12,
+            11, 12, 4,
+            11, 3, 4,
+
+            0, 11, 3,
+            0, 3, 15,
+            0, 15, 7,
+            0, 7, 11
+    };
+
     GLenum errorValue = glGetError();
     const size_t bufSize = sizeof(vtxArray);
     const size_t vtxSize = sizeof(vtxArray[0]);
@@ -71,9 +87,13 @@ void InitVBO(void){
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
     glBufferData(GL_ARRAY_BUFFER, bufSize, vtxArray, GL_STATIC_DRAW);
 
-    glGenBuffers(1, &iboID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
+    glGenBuffers(2, iboID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[0]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxArray), idxArray, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxArrayAlt), idxArrayAlt, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[0]);
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, vtxSize, 0);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, vtxSize, (GLvoid*) rgbOffset);
@@ -99,7 +119,7 @@ void DestroyVBO(void) {
     glDisableVertexAttribArray(0);
 
     glDeleteBuffers(1, &vboID);
-    glDeleteBuffers(1, &iboID);
+    glDeleteBuffers(2, iboID);
 
     glDeleteVertexArrays(1, &vaoID);
 

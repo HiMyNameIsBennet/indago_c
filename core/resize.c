@@ -6,6 +6,7 @@
 
 #include "../init/window.h"
 
-void Resize(void){
-    glfwGetWindowSize(window, &currentWidth, &currentHeight);
+void Resize(GLFWwindow* window, int width, int height){
+    currentWidth = width;
+    currentHeight = height;
 }

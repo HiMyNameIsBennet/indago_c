@@ -4,5 +4,7 @@
 
 //#include <GL/glew.h>
 
+extern GLuint iboID[2], activeIBO;
+
 void InitVBO(void);
 void DestroyVBO(void);

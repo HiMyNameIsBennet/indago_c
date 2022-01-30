@@ -2,4 +2,6 @@
 // Created by Bennet Weingartz on 28.01.22.
 //
 
-void Resize(void);
+#include <GLFW/glfw3.h>
+
+void Resize(GLFWwindow*, int, int);
