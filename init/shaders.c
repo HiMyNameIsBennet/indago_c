@@ -66,3 +66,6 @@ void DestroyShaders(void){
     }
 }
 
+GLuint LoadShader(const char* filename, GLenum type){
+
+}
