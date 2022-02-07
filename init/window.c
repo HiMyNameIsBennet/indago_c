@@ -16,8 +16,8 @@
 
 #include "window.h"
 
-int currentWidth = 1200;
-int currentHeight = 1200;
+int currentWidth = 900;
+int currentHeight = 900;
 GLFWwindow* window = NULL;
 
 static void WindowClosingCallback(GLFWwindow* window);

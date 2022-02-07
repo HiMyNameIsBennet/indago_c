@@ -85,7 +85,7 @@ void InitVBO(void){
 
     glGenBuffers(1, &vboID); //Vertex Buffer Object
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, bufSize, vtxArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, vtxArray, GL_STATIC_DRAW);
 
     glGenBuffers(2, iboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[0]);
@@ -95,8 +95,8 @@ void InitVBO(void){
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[0]);
 
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, vtxSize, 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, vtxSize, (GLvoid*) rgbOffset);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, 0);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, (GLvoid*) rgbOffset);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
