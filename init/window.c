@@ -43,6 +43,7 @@ void InitWindow(int argc, char** argv){
     }
 
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(0);
     glfwSetWindowCloseCallback(window, WindowClosingCallback);
     glfwSetWindowSizeCallback(window, Resize);
     glfwSetKeyCallback(window, KeyboardInput);

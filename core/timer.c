@@ -25,7 +25,7 @@ void Timer(){
 
         sprintf(title, "%s: %dFPS @ %dx%d",
                 WINDOW_TITLE_PREFIX,
-                frameCount * 4,
+                frameCount,
                 currentWidth,
                 currentHeight);
 
