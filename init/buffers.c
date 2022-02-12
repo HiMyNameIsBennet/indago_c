@@ -9,11 +9,12 @@
 
 #include "buffers.h"
 #include "../core/vertex.h"
+#include "../core/object.h"
 
 GLuint vaoID, vboID, iboID[2], activeIBO = 0;
 
 void InitVBO(void){
-    Vertex vtxArray[] = {
+    Vertex test[] = {
     {{ 0.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f }},
 
     {{-0.2f, 0.8f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f, 1.0f}},
@@ -36,6 +37,14 @@ void InitVBO(void){
     {{ 0.8f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f, 1.0f}},
     {{ 1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 0.0f, 1.0f}}
     };
+
+    Object* obj = malloc(sizeof(Object) +  sizeof(test));
+    glm_mat4_identity(obj->modelMatrix);
+    obj->vertexCount = sizeof(test)/sizeof(Vertex);
+
+    for(int i = 0; i < obj->vertexCount; i++){
+        obj->verts[i] = test[i];
+    }
 
     GLubyte idxArray[] = {
             0, 1, 3,
@@ -76,16 +85,16 @@ void InitVBO(void){
     };
 
     GLenum errorValue = glGetError();
-    const size_t bufSize = sizeof(vtxArray);
-    const size_t vtxSize = sizeof(vtxArray[0]);
-    const size_t rgbOffset = sizeof(vtxArray[0].pos);
+    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
+    const size_t vtxSize = sizeof(obj->verts[0]);
+    const size_t rgbOffset = sizeof(obj->verts[0].pos);
 
     glGenVertexArrays(1, &vaoID); //Vertex Array Object
     glBindVertexArray(vaoID);
 
     glGenBuffers(1, &vboID); //Vertex Buffer Object
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, vtxArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, obj->verts, GL_STATIC_DRAW);
 
     glGenBuffers(2, iboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[0]);
