@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>
 
+GLuint LoadShader(const char* filename, GLenum type);
 void InitShaders(void);
 void DestroyShaders(void);
 
