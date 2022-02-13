@@ -8,4 +8,3 @@
 void Init(int argc, char** argv);
 
 #endif //INDAGO_C_INIT_H
-

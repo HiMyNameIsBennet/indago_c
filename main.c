@@ -10,11 +10,20 @@
 #include "init/window.h"
 #include "core/render.h"
 #include "core/timer.h"
+#include "core/object.h"
 
 
 int main(int argc, char** argv) {
     Init(argc, argv);
+    /*
+    Object* cube = malloc(sizeof(Object) + sizeof(test));
+    glm_mat4_identity(cube->modelMatrix);
+    cube->vertexCount = sizeof(test)/sizeof(Vertex);
 
+    for(int i = 0; i < cube->vertexCount; i++){
+        cube->verts[i] = test[i];
+    }
+    */
     while(!glfwWindowShouldClose(window)){
         Timer();
         Render();
