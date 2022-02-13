@@ -11,9 +11,11 @@
 #include "buffers.h"
 #include "uniforms.h"
 #include "test.h"
+#include "../core/camera.h"
 #include "../core/object.h"
 
-mat4 viewMatrix, projectionMatrix;
+mat4 projectionMatrix;
+Camera camera;
 
 void Init(int argc, char** argv){
     InitWindow(argc, argv);
@@ -21,9 +23,6 @@ void Init(int argc, char** argv){
     if(glewInit() == GLEW_OK){
         printf("GLEW OK\n");
     }
-
-    glm_mat4_identity(viewMatrix);
-    glm_translate_z(viewMatrix, -2);
 
     glm_perspective(20,
                     (float) currentWidth / currentHeight,
@@ -33,6 +32,7 @@ void Init(int argc, char** argv){
 
     InitShaders();
     InitUniforms();
+    camera = InitCamera();
     Object* testObject = InitTest();
     InitVBO(testObject);
 

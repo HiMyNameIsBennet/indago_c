@@ -5,7 +5,10 @@
 #ifndef INDAGO_C_INIT_H
 #define INDAGO_C_INIT_H
 
+#include "../core/camera.h"
+
 extern mat4 viewMatrix, projectionMatrix;
+extern Camera camera;
 
 void Init(int argc, char** argv);
 
