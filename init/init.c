@@ -4,13 +4,16 @@
 
 #include <stdio.h>
 #include <GL/glew.h>
+#include <cglm/cglm.h>
 
 #include "window.h"
 #include "shaders.h"
 #include "buffers.h"
+#include "uniforms.h"
 #include "test.h"
+#include "../core/object.h"
 
-#include "tests/cube.h"
+mat4 viewMatrix, projectionMatrix;
 
 void Init(int argc, char** argv){
     InitWindow(argc, argv);
@@ -19,9 +22,19 @@ void Init(int argc, char** argv){
         printf("GLEW OK\n");
     }
 
+    glm_mat4_identity(viewMatrix);
+    glm_translate_z(viewMatrix, -2);
+
+    glm_perspective(20,
+                    (float) currentWidth / currentHeight,
+                    1.0f,
+                    100.0f,
+                    projectionMatrix);
+
     InitShaders();
-    InitVBO();
-    InitTest();
+    InitUniforms();
+    Object* testObject = InitTest();
+    InitVBO(testObject);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);

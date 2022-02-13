@@ -15,15 +15,8 @@
 
 int main(int argc, char** argv) {
     Init(argc, argv);
-    /*
-    Object* cube = malloc(sizeof(Object) + sizeof(test));
-    glm_mat4_identity(cube->modelMatrix);
-    cube->vertexCount = sizeof(test)/sizeof(Vertex);
+    GLenum err = glGetError();
 
-    for(int i = 0; i < cube->vertexCount; i++){
-        cube->verts[i] = test[i];
-    }
-    */
     while(!glfwWindowShouldClose(window)){
         Timer();
         Render();

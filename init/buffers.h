@@ -5,11 +5,11 @@
 #ifndef INDAGO_C_BUFFERS_H
 #define INDAGO_C_BUFFERS_H
 
-//#include <GL/glew.h>
+#include "../core/object.h"
 
-extern GLuint iboID[2], activeIBO;
+extern GLuint vboID;
 
-void InitVBO(void);
+void InitVBO(Object* object);
 void DestroyVBO(void);
 
 #endif //INDAGO_C_BUFFERS_H

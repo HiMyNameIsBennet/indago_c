@@ -2,18 +2,81 @@
 // Created by Bennet Weingartz on 13.02.22.
 //
 
-#include <stdio.h>
+#include <GL/glew.h>
+#include <cglm/cglm.h>
 
 #include "cube.h"
+#include "../uniforms.h"
+#include "../window.h"
+#include "../buffers.h"
+#include "../init.h"
+#include "../../core/object.h"
 
-void InitCube(void){
-    printf("CUBE: init function executed\n");
+Object* cube = NULL;
+
+Object* InitCube(void){
+    const Vertex verts[36] = {
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0, 0.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0, 0.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0, 0.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0, 0.0, 1.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0, 0.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}},
+        {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0, 0.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 1.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0, 0.0, 1.0}},
+        {{0.5, -0.5, 0.5, 1.0}, {1.0, 1.0, 0.0, 1.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 1.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{-0.5, 0.5, 0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0, 0.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 1.0, 1.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}},
+        {{0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 1.0, 1.0}},
+        {{0.5, -0.5, -0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
+        {{-0.5, -0.5, -0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}},
+        {{-0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}}
+    };
+
+    cube = malloc(sizeof(Object) + sizeof(verts));
+    glm_mat4_identity(cube->modelMatrix);
+    cube->vertexCount = sizeof(verts)/sizeof(Vertex);
+
+    for(int i = 0; i < cube->vertexCount; i++){
+        cube->verts[i] = verts[i];
+    }
+
+    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) cube->modelMatrix);
+
+    printf("CUBE OK\n");
+
+    return cube;
 }
 
 void DestroyCube(void){
-    printf("CUBE: destroy function executed\n");
+    free(cube);
+    printf("CUBE DESTROYED\n");
 }
 
 void DrawCube(void){
-    printf("CUBE: draw function executed\n");
+    glm_rotate_x(cube->modelMatrix, .001f, cube->modelMatrix);
+    glm_rotate_y(cube->modelMatrix, .001f, cube->modelMatrix);
+    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) cube->modelMatrix);
+    glDrawArrays(GL_TRIANGLES, 0, cube->vertexCount);
 }

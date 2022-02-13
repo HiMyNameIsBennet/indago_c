@@ -4,13 +4,17 @@
 
 #include <stdio.h>
 
+#include <GL/glew.h>
+
 #include "test.h"
+#include "uniforms.h"
 #include "tests/cube.h"
 #include "../core/render.h"
 
-void (*InitFunc)(void), (*DestroyFunc)(void);
+Object* (*InitFunc)(void);
+void (*DestroyFunc)(void);
 
-void InitTest(void){
+Object* InitTest(void){
     int test;
 
     printf("Please enter test number: ");
@@ -25,7 +29,9 @@ void InitTest(void){
             break;
     }
 
-    (*InitFunc)();
+    Object* testObject = (*InitFunc)();
+
+    return testObject;
 }
 
 void DestroyTest(void){

@@ -13,8 +13,6 @@ void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mo
     if(action == GLFW_PRESS) {
         switch (key) {
             case GLFW_KEY_H: {
-                activeIBO = (activeIBO == 1 ? 0 : 1);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID[activeIBO]);
                 break;
             }
             default:

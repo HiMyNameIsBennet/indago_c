@@ -5,7 +5,9 @@
 #ifndef INDAGO_C_CUBE_H
 #define INDAGO_C_CUBE_H
 
-void InitCube(void);
+#include "../../core/object.h"
+
+Object* InitCube(void);
 void DestroyCube(void);
 void DrawCube(void);
 
