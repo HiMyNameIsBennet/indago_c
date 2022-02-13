@@ -10,10 +10,12 @@
 #include "init/window.h"
 #include "core/render.h"
 #include "core/timer.h"
+#include "core/object.h"
 
 
 int main(int argc, char** argv) {
     Init(argc, argv);
+    GLenum err = glGetError();
 
     while(!glfwWindowShouldClose(window)){
         Timer();

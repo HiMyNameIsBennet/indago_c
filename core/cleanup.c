@@ -5,8 +5,10 @@
 #include "cleanup.h"
 #include "../init/shaders.h"
 #include "../init/buffers.h"
+#include "../init/test.h"
 
 void Cleanup(void){
+    DestroyTest();
     DestroyShaders();
     DestroyVBO();
 }

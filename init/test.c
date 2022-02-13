@@ -1,0 +1,39 @@
+//
+// Created by Bennet Weingartz on 13.02.22.
+//
+
+#include <stdio.h>
+
+#include <GL/glew.h>
+
+#include "test.h"
+#include "uniforms.h"
+#include "tests/cube.h"
+#include "../core/render.h"
+
+Object* (*InitFunc)(void);
+void (*DestroyFunc)(void);
+
+Object* InitTest(void){
+    int test;
+
+    printf("Please enter test number: ");
+    scanf("%i", &test);
+
+    switch(test){
+        default:
+        case 0:
+            RenderTest = &DrawCube;
+            InitFunc = &InitCube;
+            DestroyFunc = &DestroyCube;
+            break;
+    }
+
+    Object* testObject = (*InitFunc)();
+
+    return testObject;
+}
+
+void DestroyTest(void){
+    (*DestroyFunc)();
+}
