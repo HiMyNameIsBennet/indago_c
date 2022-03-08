@@ -2,4 +2,4 @@
 
 C graphics engine inspired by [The OpenGL Book](https://openglbook.com/)
 
-*currently in development*
+*subject to future updates*
