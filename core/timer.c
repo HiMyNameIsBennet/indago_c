@@ -21,7 +21,7 @@ void Timer(){
 
     if(time - prevTime >= 1)
     {
-        title = (char*) malloc(sizeof(char) * (strlen(WINDOW_TITLE_PREFIX) + 20));
+        title = (char*) malloc(sizeof(char) * (strlen(WINDOW_TITLE_PREFIX) + 50));
 
         sprintf(title, "%s: %dFPS @ %dx%d",
                 WINDOW_TITLE_PREFIX,
