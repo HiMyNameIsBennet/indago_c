@@ -47,6 +47,7 @@ void InitWindow(int argc, char** argv){
     glfwSetWindowCloseCallback(window, WindowClosingCallback);
     glfwSetWindowSizeCallback(window, Resize);
     glfwSetKeyCallback(window, KeyboardInput);
+    glfwSetMouseButtonCallback(window, MouseButtonInput);
 
     glClearColor(.0f, .0f, .0f, .0f);
 }

@@ -11,6 +11,8 @@
 #include "../init/init.h"
 #include "../init/buffers.h"
 
+double xpos, ypos;
+
 void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods){ //this script might get too big. consider func pointers for keys and outsourced functions
     float camMoveVector[] = {.0f, .0f, .0f};
     switch (key) {
@@ -34,4 +36,11 @@ void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mo
             break;
     }
     MoveCamera(&camera, camMoveVector);
+}
+
+void MouseButtonInput(GLFWwindow* window, int button, int action, int mods){
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        glfwGetCursorPos(window, &xpos, &ypos);
+        printf("Mouse button clicked at (%.0f, %.0f)\n", xpos, ypos);
+    }
 }
