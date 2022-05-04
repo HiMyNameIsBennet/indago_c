@@ -7,7 +7,7 @@
 
 #include "../core/object.h"
 
-Object* InitTest(void);
+Object** InitTest(void);
 void DestroyTest(void);
 
 #endif //INDAGO_C_TEST_H

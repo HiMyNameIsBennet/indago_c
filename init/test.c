@@ -11,10 +11,10 @@
 #include "tests/cube.h"
 #include "../core/render.h"
 
-Object* (*InitFunc)(void);
+Object** (*InitFunc)(void);
 void (*DestroyFunc)(void);
 
-Object* InitTest(void){
+Object** InitTest(void){
     int test;
 
     printf("Please enter test number: ");
@@ -29,7 +29,7 @@ Object* InitTest(void){
             break;
     }
 
-    Object* testObject = (*InitFunc)();
+    Object** testObject = (*InitFunc)();
 
     return testObject;
 }
