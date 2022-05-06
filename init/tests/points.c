@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <cglm/cglm.h>
+#include <GLFW/glfw3.h>
 
 #include "cube.h"
 #include "../uniforms.h"
@@ -9,6 +10,8 @@
 #include "../../core/object.h"
 
 Object* points = NULL;
+double deltaTime = 0;
+double xPrev, yPrev;
 
 Object** InitPoints(void){
     int hz, vt;
@@ -30,10 +33,10 @@ Object** InitPoints(void){
     }
 
     glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) points->modelMatrix);
-
     glPointSize(3);
-
     printf("POINTS OK\n");
+
+    glfwGetCursorPos(window, &xPrev, &yPrev);
 
     return &points;
 }
@@ -44,8 +47,17 @@ void DestroyPoints(void){
 }
 
 void DrawPoints(void){
-    //glm_rotate_x(points->modelMatrix, .001f, points->modelMatrix);
-    //glm_rotate_y(points->modelMatrix, .001f, points->modelMatrix);
-    //glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) points->modelMatrix);
+    double time = glfwGetTime();
+    if(time - deltaTime >= 0.05){
+      double x, y;
+      glfwGetCursorPos(window, &x, &y);
+      
+      vec2 vel = {x - xPrev, y - yPrev}; //NOT WORKING YET!
+      glm_vec2_scale(vel, 20, vel);
+      printf("Cursor velocity: (%0.f, %0.f)\n", *vel, *(vel + 1)); 
+
+      deltaTime = time;
+    }
+
     glDrawArrays(GL_POINTS, 0, points->vertexCount);
 }
