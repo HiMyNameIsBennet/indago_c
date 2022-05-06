@@ -11,8 +11,11 @@
 Object* points = NULL;
 
 Object** InitPoints(void){
-    int hz = 16;
-    int vt = 12;
+    int hz, vt;
+    printf("Horizontal: ");
+    scanf("%i", &hz);
+    printf("Vertical: ");
+    scanf("%i", &vt);
 
     points = malloc(sizeof(Object) + hz * vt * sizeof(Vertex));
     glm_mat4_identity(points->modelMatrix);
