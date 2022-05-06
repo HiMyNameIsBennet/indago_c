@@ -7,7 +7,7 @@
 
 #include "../../core/object.h"
 
-Object* InitCube(void);
+Object** InitCube(void);
 void DestroyCube(void);
 void DrawCube(void);
 

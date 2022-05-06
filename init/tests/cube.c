@@ -14,7 +14,7 @@
 
 Object* cube = NULL;
 
-Object* InitCube(void){
+Object** InitCube(void){
     const Vertex verts[36] = {
         {{-0.5, -0.5, 0.5, 1.0}, {0.0, 0.0, 1.0, 1.0}},
         {{0.5, 0.5, 0.5, 1.0}, {0.0, 1.0, 0.0, 1.0}},
@@ -66,7 +66,7 @@ Object* InitCube(void){
 
     printf("CUBE OK\n");
 
-    return cube;
+    return &cube;
 }
 
 void DestroyCube(void){

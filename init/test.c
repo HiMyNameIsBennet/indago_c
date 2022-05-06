@@ -9,12 +9,13 @@
 #include "test.h"
 #include "uniforms.h"
 #include "tests/cube.h"
+#include "tests/points.h"
 #include "../core/render.h"
 
-Object* (*InitFunc)(void);
+Object** (*InitFunc)(void);
 void (*DestroyFunc)(void);
 
-Object* InitTest(void){
+Object** InitTest(void){
     int test;
 
     printf("Please enter test number: ");
@@ -27,9 +28,14 @@ Object* InitTest(void){
             InitFunc = &InitCube;
             DestroyFunc = &DestroyCube;
             break;
+        case 1:
+            RenderTest = &DrawPoints;
+            InitFunc = &InitPoints;
+            DestroyFunc = &DestroyPoints;
+            break;
     }
 
-    Object* testObject = (*InitFunc)();
+    Object** testObject = (*InitFunc)();
 
     return testObject;
 }

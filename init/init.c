@@ -33,7 +33,7 @@ void Init(int argc, char** argv){
     InitShaders();
     InitUniforms();
     camera = InitCamera();
-    Object* testObject = InitTest();
+    Object* testObject = InitTest()[0];
     InitVBO(testObject);
 
     glEnable(GL_DEPTH_TEST);
