@@ -16,16 +16,16 @@ GLuint vaoID, vboID;
 void InitVBO(Object* obj){
     GLenum errorValue = glGetError();
 
-    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
-    const size_t vtxSize = sizeof(obj->verts[0]);
-    const size_t rgbOffset = sizeof(obj->verts[0].pos);
-
     glGenVertexArrays(1, &vaoID); //Vertex Array Object
     glBindVertexArray(vaoID);
 
     glGenBuffers(1, &vboID); //Vertex Buffer Object
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, obj->verts, GL_STATIC_DRAW);
+
+    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
+    const size_t vtxSize = sizeof(obj->verts[0]);
+    const size_t rgbOffset = sizeof(obj->verts[0].pos);
+
+    RefreshVBO(obj);
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, 0);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, (GLvoid*) rgbOffset);
@@ -41,6 +41,15 @@ void InitVBO(Object* obj){
     else {
         exit(-1);
     }
+}
+
+void RefreshVBO(Object* obj){
+    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
+    const size_t vtxSize = sizeof(obj->verts[0]);
+    const size_t rgbOffset = sizeof(obj->verts[0].pos);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, obj->verts, GL_STATIC_DRAW);
 }
 
 void DestroyVBO(void) {
