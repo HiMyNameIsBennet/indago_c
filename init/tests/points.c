@@ -52,11 +52,12 @@ void DrawPoints(void){
       double x, y;
       glfwGetCursorPos(window, &x, &y);
       
-      vec2 vel = {x - xPrev, y - yPrev}; //NOT WORKING YET!
-      glm_vec2_scale(vel, 20, vel);
-      printf("Cursor velocity: (%0.f, %0.f)\n", *vel, *(vel + 1)); 
+      vec2 vel = {x - xPrev, y - yPrev};
+      printf("Cursor velocity: (%0.f, %0.f) px/s\n", *vel * 20, *(vel + 1) * 20);
 
       deltaTime = time;
+      xPrev = x;
+      yPrev = y;
     }
 
     glDrawArrays(GL_POINTS, 0, points->vertexCount);
