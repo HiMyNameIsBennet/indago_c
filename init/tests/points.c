@@ -12,9 +12,9 @@
 Object* points = NULL;
 double deltaTime = 0;
 double xPrev, yPrev;
+int hz, vt;
 
 Object** InitPoints(void){
-    int hz, vt;
     printf("Horizontal: ");
     scanf("%i", &hz);
     printf("Vertical: ");
@@ -64,6 +64,25 @@ void DrawPoints(void){
       points->verts[points->vertexCount - 2].pos[1] = -2.0 / currentHeight * yPrev + 1;
       points->verts[points->vertexCount - 1].pos[0] = 2.0 / currentWidth * x - 1;
       points->verts[points->vertexCount - 1].pos[1] = -2.0 / currentHeight * y + 1;
+
+      //Need height, width, hz, vt based formulae
+      float cursorColliderRadius = 50.0f;
+      float vertexColliderRadius = 10.0f;
+
+      for(int i = 0; i < points->vertexCount - 2; i++){
+        //Could use proper basis transformation
+        vec2 scaledVtxPos = (vec2) {(1.0f + points->verts[i].pos[0]) / 2.0f * currentWidth,
+                                    (-1.0f + points->verts[i].pos[1]) / -2.0f * currentHeight};
+        float dist = glm_vec2_distance(scaledVtxPos, (vec2) {x, y});
+        if(dist < cursorColliderRadius + vertexColliderRadius){
+          points->verts[i].col[1] = 0.0f; //Set to red
+          points->verts[i].col[2] = 0.0f;
+        }
+        else{
+          points->verts[i].col[1] = 1.0f; //Set to white
+          points->verts[i].col[2] = 1.0f;
+        }
+      }
 
       RefreshVBO(points);
 
