@@ -12,27 +12,35 @@
 Object* points = NULL;
 double deltaTime = 0;
 double xPrev, yPrev;
+int hz, vt;
 
 Object** InitPoints(void){
-    int hz, vt;
+    DIMENSION_MODE = 2;
+
     printf("Horizontal: ");
     scanf("%i", &hz);
     printf("Vertical: ");
     scanf("%i", &vt);
 
-    points = malloc(sizeof(Object) + hz * vt * sizeof(Vertex));
-    glm_mat4_identity(points->modelMatrix);
-    points->vertexCount = hz * vt;
+    int max = hz >= vt ? hz : vt;
+
+    points = malloc(sizeof(Object) + (hz * vt + 2) * sizeof(Vertex));
+    points->vertexCount = hz * vt + 2;
 
     for(int i = 0; i < vt; i++){
       for(int j = 0; j < hz; j++){
-        points->verts[i*hz + j] = (Vertex) {{(2.0 / hz) * j - (1 - 1.0 / hz) , //x coord
-                                             (2.0 / vt) * i - (1 - 1.0 / vt), //y coord
-                                              0.5, 1.0}, {1.0, 1.0, 1.0, 1.0}};
+        points->verts[i*hz + j] = (Vertex) {{(2.0 / max) * j - (1 - 1.0 / max) + (1 - (float) hz / max), //x coord
+                                             (2.0 / max) * i - (1 - 1.0 / max) + (1 - (float) vt / max), //y coord
+                                              .0f, 1.0f}, {1.0, 1.0, 1.0, 1.0}};
       }
     }
 
+    points->verts[points->vertexCount - 2] = (Vertex) {{0.0, 0.0, .0f, 1.0}, {1.0, 1.0, 1.0, 1.0}};
+    points->verts[points->vertexCount - 1] = (Vertex) {{0.0, 0.0, .0f, 1.0}, {1.0, 1.0, 1.0, 1.0}};
+
+    glm_mat4_identity(points->modelMatrix);
     glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) points->modelMatrix);
+
     glPointSize(3);
     printf("POINTS OK\n");
 
@@ -47,18 +55,54 @@ void DestroyPoints(void){
 }
 
 void DrawPoints(void){
+    int clamp = currentHeight <= currentWidth ? currentHeight : currentWidth;
     double time = glfwGetTime();
-    if(time - deltaTime >= 0.05){
+    if(time - deltaTime >= 0.03){
       double x, y;
       glfwGetCursorPos(window, &x, &y);
       
       vec2 vel = {x - xPrev, y - yPrev};
-      printf("Cursor velocity: (%0.f, %0.f) px/s\n", *vel * 20, *(vel + 1) * 20);
+
+      float xRatio = 1;
+      float yRatio = 1;
+      if(currentWidth >= currentHeight){
+        xRatio = (float) currentWidth / currentHeight;
+      } else {
+        yRatio = (float) currentHeight / currentWidth;
+      }
+
+
+      points->verts[points->vertexCount - 2].pos[0] = 2.0 / clamp * xPrev - xRatio;
+      points->verts[points->vertexCount - 2].pos[1] = -2.0 / clamp * yPrev + yRatio;
+      points->verts[points->vertexCount - 1].pos[0] = 2.0 / clamp * x - xRatio;
+      points->verts[points->vertexCount - 1].pos[1] = -2.0 / clamp * y + yRatio;
+
+      //Need height, width, hz, vt based formulae
+      float cursorColliderRadius = 50.0f;
+      float vertexColliderRadius = 10.0f;
+
+      for(int i = 0; i < points->vertexCount - 2; i++){
+        //Could use proper basis transformation
+        vec2 scaledVtxPos = (vec2) {(xRatio + points->verts[i].pos[0]) / 2.0f * clamp,
+                                    (-yRatio + points->verts[i].pos[1]) / -2.0f * clamp};
+        float dist = glm_vec2_distance(scaledVtxPos, (vec2) {x, y});
+        if(dist < cursorColliderRadius + vertexColliderRadius){
+          points->verts[i].col[1] = 0.0f; //Set to red
+          points->verts[i].col[2] = 0.0f;
+        }
+        else{
+          points->verts[i].col[1] = 1.0f; //Set to white
+          points->verts[i].col[2] = 1.0f;
+        }
+      }
+
+      RefreshVBO(points);
 
       deltaTime = time;
       xPrev = x;
       yPrev = y;
     }
 
-    glDrawArrays(GL_POINTS, 0, points->vertexCount);
+    glDrawArrays(GL_POINTS, 0, points->vertexCount - 2);
+    glDrawArrays(GL_LINES, points->vertexCount - 2, 2);
 }

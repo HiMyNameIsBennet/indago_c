@@ -7,8 +7,11 @@
 #include "camera.h"
 #include "../init/uniforms.h"
 
+mat4 viewMatrix;
+
 void MoveCamera(Camera* camera, vec3 vector){
     glm_translate(camera->position, vector);
+    glm_mat4_copy(camera->position, viewMatrix);
     glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, (float*) camera->position);
 }
 

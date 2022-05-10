@@ -17,8 +17,6 @@ void InitUniforms(void){
     modelMatrixUniformLocation = glGetUniformLocation(programID, "modelMatrix");
     viewMatrixUniformLocation = glGetUniformLocation(programID, "viewMatrix");
     projectionMatrixUniformLocation = glGetUniformLocation(programID, "projectionMatrix");
-
-    glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, (float*) projectionMatrix);
 }
 
 void UpdateUniforms(void){

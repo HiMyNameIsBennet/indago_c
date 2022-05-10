@@ -14,6 +14,7 @@
 #include "../core/camera.h"
 #include "../core/object.h"
 
+int DIMENSION_MODE = 3;
 mat4 projectionMatrix;
 Camera camera;
 
@@ -24,16 +25,23 @@ void Init(int argc, char** argv){
         printf("GLEW OK\n");
     }
 
-    glm_perspective(20,
-                    (float) currentWidth / currentHeight,
-                    1.0f,
-                    100.0f,
-                    projectionMatrix);
-
     InitShaders();
     InitUniforms();
     camera = InitCamera();
     Object* testObject = InitTest()[0];
+
+    if(DIMENSION_MODE == 3){
+      glm_perspective(20,
+                      (float) currentWidth / currentHeight,
+                      1.0f,
+                      100.0f,
+                      projectionMatrix);
+    } else if(DIMENSION_MODE == 2){
+      glm_ortho_default((float) currentWidth / currentHeight,
+                        projectionMatrix);
+    }
+    glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, (float*) projectionMatrix);
+
     InitVBO(testObject);
 
     glEnable(GL_DEPTH_TEST);
