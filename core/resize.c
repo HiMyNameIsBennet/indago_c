@@ -16,11 +16,16 @@ void Resize(GLFWwindow* window, int width, int height){
 
     glViewport(0, 0, currentWidth, currentHeight);
 
-    glm_perspective(20,
-                    (float) currentWidth / currentHeight,
-                    1.0f,
-                    100.0f,
-                    projectionMatrix);
+    if(DIMENSION_MODE == 3){
+      glm_perspective(20,
+                      (float) currentWidth / currentHeight,
+                      1.0f,
+                      100.0f,
+                      projectionMatrix);
+    } else if(DIMENSION_MODE == 2){
+      glm_ortho_default((float) currentWidth / currentHeight,
+                        projectionMatrix);
+    }
 
-    UpdateUniforms();
+  UpdateUniforms();
 }

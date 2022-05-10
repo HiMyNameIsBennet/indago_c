@@ -7,7 +7,8 @@
 
 #include "../core/camera.h"
 
-extern mat4 viewMatrix, projectionMatrix;
+extern int DIMENSION_MODE;
+extern mat4 projectionMatrix;
 extern Camera camera;
 
 void Init(int argc, char** argv);

@@ -11,6 +11,7 @@ typedef struct{
     mat4 position;
 } Camera;
 
+extern mat4 viewMatrix;
 void MoveCamera(Camera* camera, vec3 vector);
 Camera InitCamera(void);
 
