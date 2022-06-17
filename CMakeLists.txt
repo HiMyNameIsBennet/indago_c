@@ -7,7 +7,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-add_executable(indago_c main.c init/window.c core/render.c core/render.h init/window.h init/init.c init/init.h core/timer.c core/timer.h init/shaders.c init/shaders.h core/cleanup.c core/cleanup.h init/buffers.c init/buffers.h core/vertex.h core/resize.c core/resize.h core/input.c core/input.h core/utility.c core/utility.h core/object.h init/tests/cube.c init/tests/cube.h init/test.c init/test.h init/uniforms.c init/uniforms.h core/camera.c core/camera.h init/tests/points.c init/tests/points.h)
+add_executable(indago_c main.c init/window.c core/render.c core/render.h init/window.h init/init.c init/init.h core/timer.c core/timer.h init/shaders.c init/shaders.h core/cleanup.c core/cleanup.h init/buffers.c init/buffers.h core/vertex.h core/resize.c core/resize.h core/input.c core/input.h core/utility.c core/utility.h core/object.h init/tests/cube.c init/tests/cube.h init/test.c init/test.h init/uniforms.c init/uniforms.h core/camera.c core/camera.h init/tests/points.c init/tests/points.h init/tests/waves.c init/tests/waves.h)
 
 
 find_package(GLEW REQUIRED)
