@@ -12,14 +12,15 @@
 #include "../init/window.h"
 
 unsigned frameCount = 0;
-double prevTime = 0;
+double time, secTimer, prevTime, frameTime = 0;
 char* title;
 
 void Timer(){
-    double time = glfwGetTime();
+    prevTime = time;
+    time = glfwGetTime();
     frameCount++;
 
-    if(time - prevTime >= 1)
+    if(time - secTimer >= 1)
     {
         title = (char*) malloc(sizeof(char) * (strlen(WINDOW_TITLE_PREFIX) + 50));
 
@@ -33,6 +34,8 @@ void Timer(){
         free(title);
 
         frameCount = 0;
-        prevTime = time;
+        secTimer = time;
     }
+
+    frameTime = time - prevTime;
 }

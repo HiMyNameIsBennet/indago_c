@@ -9,10 +9,11 @@
 
 typedef struct{
     mat4 position;
+    vec3 velocity;
 } Camera;
 
 extern mat4 viewMatrix;
-void MoveCamera(Camera* camera, vec3 vector);
+void MoveCamera(Camera* camera);
 Camera InitCamera(void);
 
 #endif //INDAGO_C_CAMERA_H

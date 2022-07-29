@@ -6,6 +6,7 @@
 #define INDAGO_C_TIMER_H
 
 extern unsigned frameCount;
+extern double frameTime;
 
 void Timer();
 
