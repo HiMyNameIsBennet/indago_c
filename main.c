@@ -11,7 +11,7 @@
 #include "core/render.h"
 #include "core/timer.h"
 #include "core/object.h"
-
+#include "core/camera.h"
 
 int main(int argc, char** argv) {
     Init(argc, argv);
@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
 
     while(!glfwWindowShouldClose(window)){
         Timer();
+        MoveCamera(&camera);
         Render();
         glfwPollEvents();
     }

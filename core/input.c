@@ -14,28 +14,35 @@
 double xpos, ypos;
 
 void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods){ //this script might get too big. consider func pointers for keys and outsourced functions
-    float camMoveVector[] = {.0f, .0f, .0f};
+    float velocity[3];
+    glm_vec3_copy(camera.velocity, velocity);
+
     switch (key) {
         case GLFW_KEY_W: {
-            camMoveVector[2] = .05f;
+            if(action == GLFW_PRESS) velocity[2] = 5;
+            else if(action == GLFW_RELEASE) velocity[2] = 0;
             break;
         }
         case GLFW_KEY_A: {
-            camMoveVector[0] = .05f;
+            if(action == GLFW_PRESS) velocity[0] = 5;
+            else if(action == GLFW_RELEASE) velocity[0] = 0;
             break;
         }
         case GLFW_KEY_S: {
-            camMoveVector[2] = -.05f;
+            if(action == GLFW_PRESS) velocity[2] = -5;
+            else if(action == GLFW_RELEASE) velocity[2] = 0;
             break;
         }
         case GLFW_KEY_D: {
-            camMoveVector[0] = -.05f;
+            if(action == GLFW_PRESS) velocity[0] = -5;
+            else if(action == GLFW_RELEASE) velocity[0] = 0;
             break;
         }
         default:
             break;
     }
-    MoveCamera(&camera, camMoveVector);
+
+    glm_vec3_copy(velocity, camera.velocity);
 }
 
 void MouseButtonInput(GLFWwindow* window, int button, int action, int mods){
