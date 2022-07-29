@@ -10,6 +10,7 @@
 #include "uniforms.h"
 #include "tests/cube.h"
 #include "tests/points.h"
+#include "tests/waves.h"
 #include "../core/render.h"
 
 Object** (*InitFunc)(void);
@@ -32,6 +33,11 @@ Object** InitTest(void){
             RenderTest = &DrawPoints;
             InitFunc = &InitPoints;
             DestroyFunc = &DestroyPoints;
+            break;
+        case 2:
+            RenderTest = &DrawWaves;
+            InitFunc = &InitWaves;
+            DestroyFunc = &DestroyWaves;
             break;
     }
 
