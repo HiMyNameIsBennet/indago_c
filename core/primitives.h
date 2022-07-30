@@ -7,6 +7,6 @@
 
 #include "object.h"
 
-Object* Quad(vec3 upLeft, vec3 upRight, vec3 downLeft, vec3 downRight);
+Vertex* Quad(vec3 upLeft, vec3 upRight, vec3 downLeft, vec3 downRight, int* size);
 
 #endif //INDAGO_C_PRIMITIVES_H
