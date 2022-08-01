@@ -61,15 +61,15 @@ void RefreshVBO(Object* obj){
     glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, col, GL_STATIC_DRAW);
 }
 
-void DestroyVBO(void) { // won't work properly for a while
+void DestroyVBO(Object* obj) {
     GLenum errorValue = glGetError();
 
-    glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 
-    glDeleteBuffers(1, &vboID);
+    glDeleteBuffers(2, obj->vbo);
 
-    glDeleteVertexArrays(1, &vaoID);
+    glDeleteVertexArrays(1, &obj->vao);
 
     errorValue = glGetError();
 

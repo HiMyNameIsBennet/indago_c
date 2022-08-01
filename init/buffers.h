@@ -11,6 +11,6 @@ extern GLuint vboID;
 
 void InitVBO(Object* object);
 void RefreshVBO(Object* object);
-void DestroyVBO(void);
+void DestroyVBO(Object* object);
 
 #endif //INDAGO_C_BUFFERS_H

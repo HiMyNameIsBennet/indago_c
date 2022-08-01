@@ -36,15 +36,16 @@ void InitShaders(void){
 void DestroyShaders(void){
     GLenum errorValue = glGetError();
 
-    glUseProgram(programID);
+    glUseProgram(0);
 
     glDetachShader(programID, vShaderID);
     glDetachShader(programID, fShaderID);
 
+    glDeleteProgram(programID);
+
     glDeleteShader(vShaderID);
     glDeleteShader(fShaderID);
 
-    glDeleteProgram(programID);
 
     errorValue = glGetError();
 
