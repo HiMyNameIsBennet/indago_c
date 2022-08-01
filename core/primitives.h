@@ -5,6 +5,8 @@
 #ifndef INDAGO_C_PRIMITIVES_H
 #define INDAGO_C_PRIMITIVES_H
 
+#include <GL/glew.h>
+
 #include "object.h"
 
 Vertex* Quad(vec3 upLeft, vec3 upRight, vec3 downLeft, vec3 downRight, int* size);
