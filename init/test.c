@@ -7,6 +7,7 @@
 #include <GL/glew.h>
 
 #include "test.h"
+#include "buffers.h"
 #include "uniforms.h"
 #include "tests/cube.h"
 #include "tests/points.h"
@@ -15,6 +16,8 @@
 
 Object** (*InitFunc)(void);
 void (*DestroyFunc)(void);
+
+Object** testObject;
 
 Object** InitTest(void){
     int test;
@@ -41,11 +44,12 @@ Object** InitTest(void){
             break;
     }
 
-    Object** testObject = (*InitFunc)();
+    testObject = (*InitFunc)();
 
     return testObject;
 }
 
 void DestroyTest(void){
     (*DestroyFunc)();
+    DestroyVBO(*testObject);
 }

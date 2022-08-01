@@ -10,5 +10,4 @@
 void Cleanup(void){
     DestroyTest();
     DestroyShaders();
-    DestroyVBO();
 }

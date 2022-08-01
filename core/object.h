@@ -12,6 +12,8 @@
 typedef struct {
     mat4 modelMatrix;
     int vertexCount;
+    GLuint vao;
+    GLuint vbo[2]; // idx0: pos, idx1: col
     Vertex verts[];
 } Object;
 

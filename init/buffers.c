@@ -16,21 +16,21 @@ GLuint vaoID, vboID;
 void InitVBO(Object* obj){
     GLenum errorValue = glGetError();
 
-    glGenVertexArrays(1, &vaoID); //Vertex Array Object
-    glBindVertexArray(vaoID);
+    glGenVertexArrays(1, &obj->vao); //Vertex Array Object
+    glBindVertexArray(obj->vao);
 
-    glGenBuffers(1, &vboID); //Vertex Buffer Object
+    glGenBuffers(2, obj->vbo); //Vertex Buffer Object
 
-    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
-    const size_t vtxSize = sizeof(obj->verts[0]);
-    const size_t rgbOffset = sizeof(obj->verts[0].pos);
+    const size_t vtxSize = sizeof(obj->verts[0].pos);
 
     RefreshVBO(obj);
 
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, (GLsizei) vtxSize, (GLvoid*) rgbOffset);
-
+    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[0]); // pos
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[1]); // col
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(1);
 
     errorValue = glGetError();
@@ -44,23 +44,32 @@ void InitVBO(Object* obj){
 }
 
 void RefreshVBO(Object* obj){
-    const size_t bufSize = sizeof(Vertex) * obj->vertexCount;
-    const size_t vtxSize = sizeof(obj->verts[0]);
-    const size_t rgbOffset = sizeof(obj->verts[0].pos);
+    const size_t bufSize = sizeof(float[4]) * obj->vertexCount;
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, obj->verts, GL_STATIC_DRAW);
+    float pos[obj->vertexCount][4], col[obj->vertexCount][4];
+
+    for(int i = 0; i < obj->vertexCount; i++)
+        for(int j = 0; j < 4; j++) {
+            pos[i][j] = obj->verts[i].pos[j];
+            col[i][j] = obj->verts[i].col[j];
+        }
+
+    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, pos, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[1]);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, col, GL_STATIC_DRAW);
 }
 
-void DestroyVBO(void) {
+void DestroyVBO(Object* obj) {
     GLenum errorValue = glGetError();
 
-    glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
 
-    glDeleteBuffers(1, &vboID);
+    glDeleteBuffers(2, obj->vbo);
 
-    glDeleteVertexArrays(1, &vaoID);
+    glDeleteVertexArrays(1, &obj->vao);
 
     errorValue = glGetError();
 
