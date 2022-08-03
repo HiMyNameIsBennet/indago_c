@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include <GL/glew.h>
+#include <string.h>
 
 #include "buffers.h"
 #include "../core/vertex.h"
@@ -21,17 +22,18 @@ void InitVBO(Object* obj){
 
     glGenBuffers(2, obj->vbo); //Vertex Buffer Object
 
-    const size_t vtxSize = sizeof(obj->verts[0].pos);
-
-    RefreshVBO(obj);
+    RefreshVBO(obj, "position");
+    RefreshVBO(obj, "color");
 
     glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[0]); // pos
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[1]); // col
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     errorValue = glGetError();
 
@@ -43,22 +45,34 @@ void InitVBO(Object* obj){
     }
 }
 
-void RefreshVBO(Object* obj){
+void RefreshVBO(Object* obj, char* buffer){ // either vertex (0) or color (1) (for now)
     const size_t bufSize = sizeof(float[4]) * obj->vertexCount;
 
-    float pos[obj->vertexCount][4], col[obj->vertexCount][4];
+    if(strcmp(buffer, "position") == 0){
+        float pos[obj->vertexCount][4];
 
-    for(int i = 0; i < obj->vertexCount; i++)
-        for(int j = 0; j < 4; j++) {
-            pos[i][j] = obj->verts[i].pos[j];
-            col[i][j] = obj->verts[i].col[j];
-        }
+        for(int i = 0; i < obj->vertexCount; i++)
+            for(int j = 0; j < 4; j++)
+                pos[i][j] = obj->verts[i].pos[j];
 
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, pos, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[0]);
+        glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, pos, GL_STATIC_DRAW); //BUFFERS SWAP (see tests) FIX!!!
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    else if(strcmp(buffer, "color") == 0) {
+        float col[obj->vertexCount][4];
 
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, col, GL_STATIC_DRAW);
+        for(int i = 0; i < obj->vertexCount; i++)
+            for(int j = 0; j < 4; j++)
+                col[i][j] = obj->verts[i].col[j];
+
+        glBindBuffer(GL_ARRAY_BUFFER, obj->vbo[1]);
+        glBufferData(GL_ARRAY_BUFFER, (GLsizei) bufSize, col, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    else {
+        exit(-1);
+    }
 }
 
 void DestroyVBO(Object* obj) {

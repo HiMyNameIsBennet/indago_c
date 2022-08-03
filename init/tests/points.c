@@ -96,7 +96,8 @@ void DrawPoints(void){
         }
       }
 
-      RefreshVBO(points);
+      RefreshVBO(points, "position");
+      RefreshVBO(points, "color");
 
       deltaTime = time;
       xPrev = x;

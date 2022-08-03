@@ -52,7 +52,7 @@ void DrawWaves(void){
   point->verts[0].pos[0] = sin(time * 2) * 0.7;
   point->verts[0].pos[1] = cos(time * 2) * 0.7;
 
-  RefreshVBO(point);
+  RefreshVBO(point, "position");
 
   glDrawArrays(GL_POINTS, 0, point->vertexCount);
 }
