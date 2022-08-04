@@ -9,7 +9,6 @@
 #include "input.h"
 #include "camera.h"
 #include "../init/init.h"
-#include "../init/buffers.h"
 
 double xpos, ypos;
 
