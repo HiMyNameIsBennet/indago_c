@@ -24,8 +24,9 @@ Object** InitPoints(void){
 
     int max = hz >= vt ? hz : vt;
 
-    points = malloc(sizeof(Object) + (hz * vt + 2) * sizeof(Vertex));
-    points->vertexCount = hz * vt + 2;
+    Vertex verts[hz * vt + 2];
+
+    points = InitObject(verts, (sizeof(verts) / sizeof(Vertex)));
 
     for(int i = 0; i < vt; i++){
       for(int j = 0; j < hz; j++){
@@ -38,8 +39,9 @@ Object** InitPoints(void){
     points->verts[points->vertexCount - 2] = (Vertex) {{0.0, 0.0, .0f, 1.0}, {1.0, 1.0, 1.0, 1.0}};
     points->verts[points->vertexCount - 1] = (Vertex) {{0.0, 0.0, .0f, 1.0}, {1.0, 1.0, 1.0, 1.0}};
 
-    glm_mat4_identity(points->modelMatrix);
-    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) points->modelMatrix);
+    mat4 modelMatrix;
+    CalcModel(points, modelMatrix);
+    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) modelMatrix);
 
     glPointSize(3);
     printf("POINTS OK\n");

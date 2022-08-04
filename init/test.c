@@ -8,7 +8,6 @@
 
 #include "test.h"
 #include "buffers.h"
-#include "uniforms.h"
 #include "tests/cube.h"
 #include "tests/points.h"
 #include "tests/waves.h"

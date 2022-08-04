@@ -54,15 +54,12 @@ Object** InitCube(void){
         {{-0.5, 0.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 1.0}}
     };
 
-    cube = malloc(sizeof(Object) + sizeof(verts));
-    glm_mat4_identity(cube->modelMatrix);
-    cube->vertexCount = sizeof(verts)/sizeof(Vertex);
+    cube = InitObject(verts, (sizeof(verts) / sizeof(Vertex)));
 
-    for(int i = 0; i < cube->vertexCount; i++){
-        cube->verts[i] = verts[i];
-    }
+    mat4 modelMatrix;
+    CalcModel(cube, modelMatrix);
 
-    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) cube->modelMatrix);
+    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) modelMatrix);
 
     printf("CUBE OK\n");
 
@@ -75,8 +72,10 @@ void DestroyCube(void){
 }
 
 void DrawCube(void){
-    glm_rotate_x(cube->modelMatrix, .001f, cube->modelMatrix);
-    glm_rotate_y(cube->modelMatrix, .001f, cube->modelMatrix);
-    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) cube->modelMatrix);
+    mat4 modelMatrix;
+    glm_rotate_x(cube->rotationMatrix, .001f, cube->rotationMatrix);
+    glm_rotate_y(cube->rotationMatrix, .001f, cube->rotationMatrix);
+    CalcModel(cube, modelMatrix);
+    glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) modelMatrix);
     glDrawArrays(GL_TRIANGLES, 0, cube->vertexCount);
 }

@@ -20,15 +20,16 @@ Object** InitWaves(void){
       {{0.0, 0.7, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}}
   };
 
-  point = malloc(sizeof(Object) + sizeof(verts));
-  glm_mat4_identity(point->modelMatrix);
-  point->vertexCount = sizeof(verts)/sizeof(Vertex);
+  point = InitObject(verts, (sizeof(verts) / sizeof(Vertex)));
+
+  mat4 modelMatrix;
+  CalcModel(point, modelMatrix);
 
   for(int i = 0; i < point->vertexCount; i++){
     point->verts[i] = i == 0 ? verts[i] : (Vertex) {{0.7, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}};
   }
 
-  glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) point->modelMatrix);
+  glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) modelMatrix);
   glPointSize(10);
 
   printf("WAVES OK\n");
