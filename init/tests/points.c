@@ -85,8 +85,8 @@ void DrawPoints(void){
 
       for(int i = 0; i < points->vertexCount - 2; i++){
         //Could use proper basis transformation
-        vec2 scaledVtxPos = (vec2) {(xRatio + points->verts[i].pos[0]) / 2.0f * clamp,
-                                    (-yRatio + points->verts[i].pos[1]) / -2.0f * clamp};
+        vec2 scaledVtxPos = {(xRatio + points->verts[i].pos[0]) / 2.0f * clamp,
+                             (-yRatio + points->verts[i].pos[1]) / -2.0f * clamp};
         float dist = glm_vec2_distance(scaledVtxPos, (vec2) {x, y});
         if(dist < cursorColliderRadius + vertexColliderRadius){
           points->verts[i].col[1] = 0.0f; //Set to red
