@@ -2,6 +2,9 @@
 // Created by Bennet Weingartz on 08.02.22.
 //
 
+#define _USE_MATH_DEFINES
+
+
 #include <math.h>
 
 #include "utility.h"
