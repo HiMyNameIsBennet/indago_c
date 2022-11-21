@@ -5,8 +5,6 @@
 #ifndef INDAGO_C_RAYS_H
 #define INDAGO_C_RAYS_H
 
-#endif //INDAGO_C_RAYS_H
-
 
 #include <cglm/cglm.h>
 
@@ -19,3 +17,5 @@ typedef struct {
 
 Ray* InitRay(vec4 startNDC, vec4 endNDC);
 
+
+#endif //INDAGO_C_RAYS_H

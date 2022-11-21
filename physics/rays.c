@@ -25,8 +25,8 @@ Ray* InitRay(vec4 startNDC, vec4 endNDC){ //initializes world space ray from NDC
 	glm_mat4_mulv(inverseMatrix, endNDC, endUnscaled);
 
 	//normalizing vectors by w coordinate
-	glm_vec4_scale(startUnscaled, 1.0f / ray->start[3], ray->start);
-	glm_vec4_scale(endUnscaled, 1.0f / ray->end[3], ray->end);
+	glm_vec4_scale(startUnscaled, 1.0f / startUnscaled[3], ray->start);
+	glm_vec4_scale(endUnscaled, 1.0f / endUnscaled[3], ray->end);
 
 	return ray;
 }

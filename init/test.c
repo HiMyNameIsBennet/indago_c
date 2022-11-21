@@ -11,6 +11,7 @@
 #include "tests/cube.h"
 #include "tests/points.h"
 #include "tests/waves.h"
+#include "tests/mouse-ray.h"
 #include "../core/render.h"
 
 Object** (*InitFunc)(void);
@@ -41,6 +42,11 @@ Object** InitTest(void){
             InitFunc = &InitWaves;
             DestroyFunc = &DestroyWaves;
             break;
+		case 3:
+			RenderTest = &DrawRays;
+			InitFunc = &InitRays;
+			DestroyFunc = &DestroyRays;
+			break;
     }
 
     testObject = (*InitFunc)();
@@ -52,3 +58,4 @@ void DestroyTest(void){
     (*DestroyFunc)();
     DestroyVBO(*testObject);
 }
+
