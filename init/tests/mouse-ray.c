@@ -9,47 +9,44 @@
 
 
 Ray rays[1];
-Object* raysWrapper = NULL;
+Object* rayWrappers[1];
 
 
 Object** InitRays(void){
 	rays[0] = *InitRay((vec4) {-.5f, -.5f, -1.f, 1.0f}, (vec4) {.0f, .0f, 1.f, 1.0f});
-	Vertex verts[(sizeof(rays) / sizeof(Ray)) * 2]; //two verts per ray
-	raysWrapper = InitObject(verts, (sizeof(verts) / sizeof(Vertex)));
+	size_t rayArrayLen = sizeof(rays) / sizeof(Ray);
 
-
-	size_t coordSize = sizeof(float) * 4;
-
-	for(int i = 0; i < sizeof(rays) / sizeof(Ray); i += 2){
-		memcpy(raysWrapper->verts[i].pos, rays[i].start, coordSize);
-		memcpy(raysWrapper->verts[i + 1].pos, rays[i].end, coordSize);
+	mat4 rayModelMatrices[rayArrayLen];
 	
-		memcpy(raysWrapper->verts[i].col, (vec4) {1.0f, 1.0f, 1.0f, 1.0f}, coordSize);
-		memcpy(raysWrapper->verts[i + 1].col, (vec4) {1.0f, 1.0f, 1.0f, 1.0f}, coordSize);
+	for(int i = 0; i < rayArrayLen; i++){
+		rayWrappers[i] = WrapRay(rays + i);
+		CalcModel(rayWrappers[i], rayModelMatrices[i]);
 	}
 
-
-	mat4 modelMatrix;
-	CalcModel(raysWrapper, modelMatrix);
-
-	glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) modelMatrix);
+	
+	//only works for singular ray (for now, bound to change to per-object model)
+	glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, (float*) rayModelMatrices);
 
 	
 	printf("RAYS OK\n");
 
-	return &raysWrapper;
+	//as above
+	return rayWrappers;
 }
 
 
 void DestroyRays(void){
-	free(raysWrapper);
+	//as above
+	free(rayWrappers[0]);
 	printf("RAYS DESTROYED\n");
 }
 
 
 void DrawRays(void){
-	glDrawArrays(GL_LINES, 0, raysWrapper->vertexCount);
+	//as above
+	glDrawArrays(GL_LINES, 0, rayWrappers[0]->vertexCount);
 
-	RefreshVBO(raysWrapper, "position");
+	//as above
+	RefreshVBO(rayWrappers[0], "position");
 }
 

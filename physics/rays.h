@@ -8,6 +8,8 @@
 
 #include <cglm/cglm.h>
 
+#include "../core/object.h"
+
 
 typedef struct {
 	vec4 start;
@@ -16,6 +18,7 @@ typedef struct {
 
 
 Ray* InitRay(vec4 startNDC, vec4 endNDC);
+Object* WrapRay(Ray*);
 
 
 #endif //INDAGO_C_RAYS_H
