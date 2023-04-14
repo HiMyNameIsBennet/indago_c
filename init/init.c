@@ -24,22 +24,23 @@ void Init(int argc, char** argv){
     if(glewInit() == GLEW_OK){
         printf("GLEW OK\n");
     }
+	
+    glm_perspective(20,
+                    (float) currentWidth / currentHeight,
+                    1.0f,
+                    100.0f,
+                    projectionMatrix);
 
     InitShaders();
     InitUniforms();
     camera = InitCamera();
     Object* testObject = InitTest()[0];
 
-    if(DIMENSION_MODE == 3){
-      glm_perspective(20,
-                      (float) currentWidth / currentHeight,
-                      1.0f,
-                      100.0f,
-                      projectionMatrix);
-    } else if(DIMENSION_MODE == 2){
-      glm_ortho_default((float) currentWidth / currentHeight,
-                        projectionMatrix);
-    }
+    if(DIMENSION_MODE == 2){
+    	glm_ortho_default((float) currentWidth / currentHeight,
+        	            projectionMatrix);
+	}
+
     glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, (float*) projectionMatrix);
 
     InitVBO(testObject);
@@ -51,3 +52,4 @@ void Init(int argc, char** argv){
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 }
+
