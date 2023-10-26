@@ -12,6 +12,7 @@
 #include "tests/points.h"
 #include "tests/waves.h"
 #include "tests/mouse-ray.h"
+#include "tests/voronoi.h"
 #include "../core/render.h"
 
 Object** (*InitFunc)(void);
@@ -42,11 +43,16 @@ Object** InitTest(void){
             InitFunc = &InitWaves;
             DestroyFunc = &DestroyWaves;
             break;
-		case 3:
-			RenderTest = &DrawRays;
-			InitFunc = &InitRays;
-			DestroyFunc = &DestroyRays;
-			break;
+	case 3:
+	    RenderTest = &DrawRays;
+	    InitFunc = &InitRays;
+	    DestroyFunc = &DestroyRays;
+	    break;
+        case 4:
+            RenderTest = &DrawVoronoi;
+            InitFunc = &InitVoronoi;
+            DestroyFunc = &DestroyVoronoi;
+    	    break;
     }
 
     testObject = (*InitFunc)();
