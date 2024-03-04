@@ -10,7 +10,7 @@
 extern GLuint programID;
 
 GLuint LoadShader(const char* filename, GLenum type);
-void InitShaders(void);
-void DestroyShaders(void);
+void InitTestShaders(void);
+void DestroyTestShaders(void);
 
 #endif //INDAGO_C_SHADERS_H

@@ -7,7 +7,7 @@
 #include "../init/buffers.h"
 #include "../init/test.h"
 
-void Cleanup(void){
+void Cleanup(void){ // have to make this modular. testing mode or not?
     DestroyTest();
-    DestroyShaders();
+    DestroyTestShaders();
 }

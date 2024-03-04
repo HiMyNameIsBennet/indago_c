@@ -11,7 +11,7 @@
 
 GLuint vShaderID, fShaderID, programID;
 
-void InitShaders(void){
+void InitTestShaders(void){
     GLenum errorValue = glGetError();
 
     vShaderID = LoadShader("../shaders/shader.vertex.glsl", GL_VERTEX_SHADER);
@@ -26,14 +26,14 @@ void InitShaders(void){
     errorValue = glGetError();
 
     if(errorValue == GL_NO_ERROR){
-        printf("SHADERS OK\n");
+        printf("TEST SHADERS OK\n");
     }
     else{
         exit(-1);
     }
 }
 
-void DestroyShaders(void){
+void DestroyTestShaders(void){
     GLenum errorValue = glGetError();
 
     glUseProgram(0);
@@ -50,7 +50,7 @@ void DestroyShaders(void){
     errorValue = glGetError();
 
     if(errorValue == GL_NO_ERROR){
-        printf("SHADERS DESTROYED\n");
+        printf("TEST SHADERS DESTROYED\n");
     }
     else {
         exit(-1);

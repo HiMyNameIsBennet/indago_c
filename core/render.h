@@ -6,6 +6,7 @@
 #define INDAGO_C_RENDER_H
 
 extern void (*RenderTest)(void);
+void (*RenderTest)(void);
 
 void Render(void);
 

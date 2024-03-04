@@ -14,6 +14,6 @@ extern int currentWidth,
 
 extern GLFWwindow* window;
 
-void InitWindow(int argc, char** argv);
+void InitWindow(const int argc, const char** argv);
 
 #endif //INDAGO_C_WINDOW_H

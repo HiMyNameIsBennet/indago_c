@@ -23,7 +23,7 @@ GLFWwindow* window = NULL;
 static void WindowClosingCallback(GLFWwindow* window);
 
 
-void InitWindow(int argc, char** argv){
+void InitWindow(const int argc, const char** argv){
     if(!glfwInit()){
         printf("GLFW COULD NOT BE INITIALIZED");
         exit(-1);

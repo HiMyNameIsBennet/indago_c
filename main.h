@@ -1,0 +1,1 @@
+int c_main(const int argc, const char** argv);

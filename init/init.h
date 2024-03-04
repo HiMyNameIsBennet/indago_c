@@ -11,6 +11,6 @@ extern int DIMENSION_MODE;
 extern mat4 projectionMatrix;
 extern Camera camera;
 
-void Init(int argc, char** argv);
+void Init(const int argc, const char** argv);
 
 #endif //INDAGO_C_INIT_H

@@ -7,7 +7,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-add_executable(indago_c main.c init/window.c core/render.c core/render.h init/window.h init/init.c init/init.h core/timer.c core/timer.h init/shaders.c init/shaders.h core/cleanup.c core/cleanup.h init/buffers.c init/buffers.h core/vertex.h core/resize.c core/resize.h core/input.c core/input.h core/utility.c core/utility.h core/object.h init/tests/cube.c init/tests/cube.h init/test.c init/test.h init/uniforms.c init/uniforms.h core/camera.c core/camera.h init/tests/points.c init/tests/points.h init/tests/waves.c init/tests/waves.h core/object.c physics/rays.c physics/rays.h init/tests/mouse-ray.h init/tests/mouse-ray.c)
+add_library(indago_c main.c main.h init/window.c core/render.c core/render.h init/window.h init/init.c init/init.h core/timer.c core/timer.h init/shaders.c init/shaders.h core/cleanup.c core/cleanup.h init/buffers.c init/buffers.h core/vertex.h core/resize.c core/resize.h core/input.c core/input.h core/utility.c core/utility.h core/object.h init/tests/cube.c init/tests/cube.h init/test.c init/test.h init/uniforms.c init/uniforms.h core/camera.c core/camera.h init/tests/points.c init/tests/points.h init/tests/waves.c init/tests/waves.h core/object.c physics/rays.c physics/rays.h init/tests/mouse-ray.h init/tests/mouse-ray.c)
 
 
 find_package(GLEW REQUIRED)
@@ -31,14 +31,15 @@ fetchcontent_declare(
   GIT_PROGRESS TRUE
 )
 
+
 if(NOT cglm_POPULATED)
   fetchcontent_populate(cglm)
-  add_subdirectory(${cglm_SOURCE_DIR} ${cglm_BUILD_DIR})
+  add_subdirectory(${CMAKE_SOURCE_DIR}/build/_deps/cglm-src ${CMAKE_SOURCE_DIR}/build/_deps/cglm-build)
 endif()
 
 if(NOT glfw_POPULATED)
   fetchcontent_populate(glfw)
-  add_subdirectory(${glfw_SOURCE_DIR} ${glfw_BUILD_DIR})
+  add_subdirectory(${CMAKE_SOURCE_DIR}/build/_deps/glfw-src ${CMAKE_SOURCE_DIR}/build/_deps/glfw-build)
 endif()
 
 

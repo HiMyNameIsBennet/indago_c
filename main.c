@@ -13,16 +13,30 @@
 #include "core/object.h"
 #include "core/camera.h"
 
-int main(int argc, char** argv) {
+#include "main.h"
+
+int c_main(const int argc, const char** argv) {
     Init(argc, argv);
     GLenum err = glGetError();
 
     while(!glfwWindowShouldClose(window)){
         Timer();
-        MoveCamera(&camera);
-        Render();
         glfwPollEvents();
     }
 
     return 0;
 }
+
+// int main(const int argc, const char** argv) {
+//     Init(argc, argv);
+//     GLenum err = glGetError();
+
+//     while(!glfwWindowShouldClose(window)){
+//         Timer();
+//         MoveCamera(&camera);
+//         Render();
+//         glfwPollEvents();
+//     }
+
+//     return 0;
+// }

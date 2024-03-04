@@ -3,6 +3,8 @@
 //
 
 #include <stdio.h>
+#include <string.h>
+
 #include <GL/glew.h>
 #include <cglm/cglm.h>
 
@@ -18,32 +20,24 @@ int DIMENSION_MODE = 3;
 mat4 projectionMatrix;
 Camera camera;
 
-void Init(int argc, char** argv){
+void Init(const int argc, const char** argv){
     InitWindow(argc, argv);
 
     if(glewInit() == GLEW_OK){
         printf("GLEW OK\n");
     }
 	
+    if(DIMENSION_MODE == 2){
+    	glm_ortho_default((float) currentWidth / currentHeight,
+        	            projectionMatrix);
+	} else {
     glm_perspective(20,
                     (float) currentWidth / currentHeight,
                     1.0f,
                     100.0f,
                     projectionMatrix);
+    }
 
-    InitShaders();
-    InitUniforms();
-    camera = InitCamera();
-    Object* testObject = InitTest()[0];
-
-    if(DIMENSION_MODE == 2){
-    	glm_ortho_default((float) currentWidth / currentHeight,
-        	            projectionMatrix);
-	}
-
-    glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, (float*) projectionMatrix);
-
-    InitVBO(testObject);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -51,5 +45,23 @@ void Init(int argc, char** argv){
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
+    
+
+    if(argc > 1 && strcmp(argv[1], "testing") != 0){
+        return;
+    }
+
+    // only proceed if testing
+
+    InitTestShaders();
+
+    InitUniforms();
+    camera = InitCamera();
+
+    UpdateUniforms();
+
+    Object* testObject = InitTest()[0];
+
+    InitVBO(testObject);
 }
 
