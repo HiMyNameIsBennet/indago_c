@@ -4,6 +4,7 @@
 typedef struct Scenegraph {
    Node* root; 
    NodeList renderable_nodes; // Nodes that contain something that will be rendered
+   // Eventually replace the renderable_nodes thing with a BFS/DFS traversal. It's confusing...
 } Scenegraph;
 
 

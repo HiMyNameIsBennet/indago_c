@@ -15,8 +15,11 @@ Node CreateNode(const char* name, bool renderable){
     strcpy(node.name, name);
 
     node.obj = NULL;
-    node.parent = NULL;
     node.renderable = renderable;
+
+    // Scenegraph functionality
+    node.parent = NULL;
+    node.children = CreateNodeList();
 
     return node;
 }
@@ -36,8 +39,6 @@ NodeList CreateNodeList(void){
 // Append the named node to the end of the node list
 // Of course, wrapped in a NodeListItem (for the next pointer)
 void NodeListAppend(NodeList* node_list, Node* to_append){
-    NodeListItem* curr = node_list->root;
-
     // Make a new NodeListItem
     NodeListItem* new_item = (NodeListItem*) malloc(sizeof(NodeListItem));
     new_item->next = NULL;
@@ -49,6 +50,8 @@ void NodeListAppend(NodeList* node_list, Node* to_append){
        return;
     }
 
+    NodeListItem* curr = node_list->root;
+    
     // Run to the end
     while(curr->next != NULL){
         curr = curr->next;

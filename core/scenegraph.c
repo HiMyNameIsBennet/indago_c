@@ -23,6 +23,9 @@ void AddToScenegraph(Scenegraph* graph, Node* node, Node* parent){
     // By default, parent == NULL, so node's parent is the scene graph's root.
     // If parent is non-NULL, the parent from the parameter is specified
     node->parent = (parent == NULL ? graph->root : parent);
+    
+    // Append the inserted node to the parent's children
+    NodeListAppend(&(node->parent->children), node);
 
     if(node->renderable){
         NodeListAppend(&(graph->renderable_nodes), node);
@@ -38,11 +41,17 @@ void RemoveFromScenegraph(Scenegraph* graph, Node* node){
     // ...for the renderables, we remove it from the renderable_nodes
     NodeListRemove(&(graph->renderable_nodes), node);
 
-    // TODO: the node's children and node itself are no
-    // longer possible renderables and will have to be removed from the list!
-    // Find a fast way to do this. Recursion?
+    // Repeat for all children
+    if(node->children.root == NULL){
+        return;
+    }
 
-    // Maybe give a node a nodelist containing its children after all
+    NodeListItem* curr_child = node->children.root;
+    while(curr_child != NULL){
+        RemoveFromScenegraph(graph, curr_child->node);
+
+        curr_child = curr_child->next;
+    }
 }
 
 
