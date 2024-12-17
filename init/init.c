@@ -20,7 +20,7 @@ int DIMENSION_MODE = 3;
 mat4 projectionMatrix;
 Camera camera;
 
-void Init(const int argc, const char** argv){
+void Init(const int argc, const char** argv, bool testing){
     InitWindow(argc, argv);
 
     if(glewInit() == GLEW_OK){
@@ -47,11 +47,20 @@ void Init(const int argc, const char** argv){
     glFrontFace(GL_CCW);
     
 
-    if(argc > 1 && strcmp(argv[1], "testing") != 0){
+    if((argc > 1 && strcmp(argv[1], "testing") != 0) || !testing){
+        // FOR NOW (just to get output)
+        InitTestShaders();
+        
+        InitUniforms();
+        camera = InitCamera();
+
+        UpdateUniforms();
+
         return;
     }
+    
 
-    // only proceed if testing
+    // Only proceed if we're testing
 
     InitTestShaders();
 

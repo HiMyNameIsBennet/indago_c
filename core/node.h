@@ -1,3 +1,7 @@
+#ifndef INDAGO_C_NODE_H
+#define INDAGO_C_NODE_H
+
+
 #include "object.h"
 
 
@@ -25,10 +29,13 @@ typedef struct Node {
 } Node;
 
 
-Node CreateNode(const char* name, bool renderable);
+Node CreateNode(const char* name, bool renderable, Object* obj);
 
 NodeList CreateNodeList(void);
 
 void NodeListAppend(NodeList* node_list, Node* to_append);
 
 void NodeListRemove(NodeList* node_list, Node* to_remove);
+
+
+#endif

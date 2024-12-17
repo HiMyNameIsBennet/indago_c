@@ -1,3 +1,7 @@
+#ifndef INDAGO_C_SCENEGRAPH_H
+#define INDAGO_C_SCENEGRAPH_H
+
+
 #include "node.h"
 
 
@@ -16,3 +20,5 @@ void RemoveFromScenegraph(Scenegraph* graph, Node* node);
 
 void PrintScenegraph(Scenegraph* graph);
 
+
+#endif

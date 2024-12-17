@@ -5,7 +5,7 @@
 
 // Create a new node.
 // Default: obj NULL, parent NULL
-Node CreateNode(const char* name, bool renderable){
+Node CreateNode(const char* name, bool renderable, Object* obj){
     Node node;
     
     int i = 0;
@@ -14,7 +14,7 @@ Node CreateNode(const char* name, bool renderable){
     node.name = (char*) malloc(i); // i bytes. i chars.
     strcpy(node.name, name);
 
-    node.obj = NULL;
+    node.obj = obj;
     node.renderable = renderable;
 
     // Scenegraph functionality

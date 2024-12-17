@@ -8,7 +8,7 @@ Scenegraph CreateScenegraph(void){
     Scenegraph graph;
     Node* root = (Node*) (malloc(sizeof(Node)));
     
-    *root = CreateNode("ROOT", false);
+    *root = CreateNode("ROOT", false, NULL);
 
     graph.root = root;
 
@@ -81,4 +81,3 @@ void PrintScenegraph(Scenegraph* graph){
         curr_renderable = curr_renderable->next;
     }
 }
-
