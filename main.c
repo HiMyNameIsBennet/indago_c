@@ -8,19 +8,30 @@
 
 #include "init/init.h"
 #include "init/window.h"
+#include "init/buffers.h"
 #include "core/render.h"
 #include "core/timer.h"
 #include "core/object.h"
 #include "core/camera.h"
+#include "core/scenegraph.h"
 
 #include "main.h"
 
-int c_main(const int argc, const char** argv) {
-    Init(argc, argv);
+int StartEngine(const int argc, const char** argv, Scenegraph* graph) {
+    Init(argc, argv, false);
     GLenum err = glGetError();
+
+    // Init VBOs manually
+    NodeListItem* curr_renderable = graph->renderable_nodes.root;
+    while(curr_renderable != NULL){
+        InitVBO(curr_renderable->node->obj);
+        curr_renderable = curr_renderable->next;
+    }
 
     while(!glfwWindowShouldClose(window)){
         Timer();
+        MoveCamera(&camera);
+        Render(graph);
         glfwPollEvents();
     }
 
